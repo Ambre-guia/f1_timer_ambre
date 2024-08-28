@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import jwt_decode from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 
 export const useAuth = () => {
   const [user, setUser] = useState(null);
@@ -7,8 +7,12 @@ export const useAuth = () => {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      const decoded = jwt_decode(token);
-      setUser(decoded);
+      try {
+        const decoded = jwtDecode(token);
+        setUser(decoded);
+      } catch (error) {
+        console.error("Failed to decode token:", error);
+      }
     }
   }, []);
 

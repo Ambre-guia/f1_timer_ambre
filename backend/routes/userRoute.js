@@ -1,145 +1,203 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const userController = require("../controllers/userController");
-const { verifyToken } = require("../middlewares/jwtMiddleware");
+const userController = require('../controllers/userController');
+const { verifyToken } = require('../middlewares/jwtMiddleware');
 
 /**
  * @swagger
  * /user/register:
  *   post:
- *     summary: Enregistre un nouvel utilisateur.
+ *     summary: Register a new user
+ *     tags: [Users]
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
- *           example:
- *             email: gateau@gateau.com
- *             password: "gateau"
- *             role: 1
+ *           schema:
+ *             type: object
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 example: "user@example.com"
+ *               password:
+ *                 type: string
+ *                 example: "password123"
+ *             required:
+ *               - email
+ *               - password
  *     responses:
  *       201:
- *         description: Requête réussie.
- *         content:
- *           application/json:
- *             example:
- *               message: 'Utilisateur créé : ${user.email}'
+ *         description: User registered successfully
+ *       400:
+ *         description: Bad request
  */
-router.post("/user/register", userController.userRegister);
-// url = http://localhost:3001/user/register
+router.post('/user/register', userController.userRegister);
 
 /**
  * @swagger
  * /user/login:
  *   post:
- *     summary: Connecte un utilisateur existant.
+ *     summary: Login an existing user
+ *     tags: [Users]
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
- *           example:
- *             email: gateau@gateau.com
- *             password: "gateau"
+ *           schema:
+ *             type: object
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 example: "gateau@gateau.com"
+ *               password:
+ *                 type: string
+ *                 example: "gateau"
+ *             required:
+ *               - email
+ *               - password
  *     responses:
  *       200:
- *         description: Requête réussie.
+ *         description: Login successful
  *         content:
  *           application/json:
- *             example:
- *               message: 'Connexion réussie.'
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Login successful."
  */
-router.post("/user/login", userController.userLogin);
-// url = http://localhost:3001/user/login
+router.post('/user/login', userController.userLogin);
 
 /**
  * @swagger
  * /user/delete/{email}:
  *   delete:
- *     summary: Supprime un utilisateur s'il a l'autorisation nécessaire (token).
- *     headers:
- *       Authorization:
- *         description: JWT_KEY
+ *     summary: Delete a user if authorized (token required)
+ *     tags: [Users]
  *     parameters:
  *       - in: path
  *         name: email
- *         description: L'adresse e-mail de l'utilisateur à supprimer.
+ *         description: Email of the user to delete
  *         required: true
  *         schema:
  *           type: string
+ *           example: "user@example.com"
+ *     headers:
+ *       Authorization:
+ *         description: JWT token required
+ *         schema:
+ *           type: string
+ *           example: "Bearer <JWT_TOKEN>"
  *     responses:
  *       200:
- *         description: Requête réussie.
+ *         description: User deleted successfully
  *         content:
  *           application/json:
- *             example:
- *               message: 'Utilisateur supprimé : ${user.email}'
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "User deleted: user@example.com"
  */
-router.delete("/user/delete/:email", verifyToken, userController.userDelete);
-// url = http://localhost:3001/user/delete/:email
+router.delete('/user/delete/:email', verifyToken, userController.userDelete);
 
 /**
  * @swagger
  * /user/update/{email}:
  *   put:
- *     summary: Modifie les données d'un utilisateur s'il a l'autorisation nécessaire (token).
- *     headers:
- *       Authorization:
- *         description: JWT_KEY
+ *     summary: Update a user’s data if authorized (token required)
+ *     tags: [Users]
  *     parameters:
  *       - in: path
  *         name: email
- *         description: L'adresse e-mail de l'utilisateur à mettre à jour.
+ *         description: Email of the user to update
  *         required: true
  *         schema:
  *           type: string
+ *           example: "user@example.com"
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
- *           example:
- *             email: gateau@gateau.com
- *             password: "gateau"
+ *           schema:
+ *             type: object
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 example: "newuser@example.com"
+ *               password:
+ *                 type: string
+ *                 example: "newpassword123"
+ *             required:
+ *               - email
+ *               - password
+ *     headers:
+ *       Authorization:
+ *         description: JWT token required
+ *         schema:
+ *           type: string
+ *           example: "Bearer <JWT_TOKEN>"
  *     responses:
  *       200:
- *         description: Requête réussie.
+ *         description: User updated successfully
  *         content:
  *           application/json:
- *             example:
- *               message: 'ok'
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "User updated successfully."
  */
-router.put("/user/update/:email", verifyToken, userController.userUpdate);
-// url = http://localhost:3001/user/update/:email
+router.put('/user/update/:email', verifyToken, userController.userUpdate);
 
 /**
  * @swagger
  * /user/patch/{email}:
  *   patch:
- *     summary: Modifie les données d'un utilisateur s'il a l'autorisation nécessaire (token).
- *     headers:
- *       Authorization:
- *         description: JWT_KEY
+ *     summary: Patch user data if authorized (token required)
+ *     tags: [Users]
  *     parameters:
  *       - in: path
  *         name: email
- *         description: L'adresse e-mail de l'utilisateur à mettre à jour.
+ *         description: Email of the user to update
  *         required: true
  *         schema:
  *           type: string
+ *           example: "user@example.com"
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
- *           example:
- *             email: gateau@gateau.com
- *             password: "gateau"
+ *           schema:
+ *             type: object
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 example: "patcheduser@example.com"
+ *               password:
+ *                 type: string
+ *                 example: "patchedpassword123"
+ *     headers:
+ *       Authorization:
+ *         description: JWT token required
+ *         schema:
+ *           type: string
+ *           example: "Bearer <JWT_TOKEN>"
  *     responses:
  *       200:
- *         description: Requête réussie.
+ *         description: User data patched successfully
  *         content:
  *           application/json:
- *             example:
- *               message: 'L\'email de l\'utilisateur a été modifié: ${user.email}'
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "User email updated: patcheduser@example.com"
  */
-router.patch("/user/patch/:email", verifyToken, userController.userUpdate);
-// url = http://localhost:3001/user/patch/:email
+router.patch('/user/patch/:email', verifyToken, userController.userUpdate);
 
 module.exports = router;

@@ -1,6 +1,6 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const timerController = require("../controllers/timerController");
+const timerController = require('../controllers/timerController');
 
 /**
  * @swagger
@@ -24,7 +24,7 @@ const timerController = require("../controllers/timerController");
  *             example:
  *               timers: [ { id: 1, user_id: 213dfe, time: 3000 }, { id: 2, user_id: 213dfe, time: 2000 } ]
  */
-router.get("/:user_id/alltimers", timerController.listAllTimers);
+router.get('/:user_id/alltimers', timerController.listAllTimers);
 // url = http://localhost:3001/:user_id/alltimers
 
 /**
@@ -47,7 +47,7 @@ router.get("/:user_id/alltimers", timerController.listAllTimers);
  *             example:
  *               message: 'json(savedTimer)'
  */
-router.post("/:user_id/timer", timerController.createATimer);
+router.post('/:user_id/timer', timerController.createATimer);
 // url = http://localhost:3001/:user_id/timer
 
 /**
@@ -76,7 +76,7 @@ router.post("/:user_id/timer", timerController.createATimer);
  *             example:
  *               timer: 'json(timer)'
  */
-router.get("/:user_id/timers/:id", timerController.listOneTimer);
+router.get('/:user_id/timers/:id', timerController.listOneTimer);
 // url = http://localhost:3001/:user_id/timers/:id
 
 /**
@@ -105,7 +105,7 @@ router.get("/:user_id/timers/:id", timerController.listOneTimer);
  *             example:
  *               message: { message: "Timer supprimé" }
  */
-router.delete("/:user_id/timer/:id", timerController.deleteATimer);
+router.delete('/:user_id/timer/:id', timerController.deleteATimer);
 // url = http://localhost:3001/:user_id/timer/:id
 
 /**
@@ -128,7 +128,7 @@ router.delete("/:user_id/timer/:id", timerController.deleteATimer);
  *             example:
  *               averageTime: 1500
  */
-router.get("/:user_id/avgtimer", timerController.avgTimer);
+router.get('/:user_id/avgtimer', timerController.avgTimer);
 // url = http://localhost:3001/:user_id/avgtimer
 
 /**
@@ -151,7 +151,7 @@ router.get("/:user_id/avgtimer", timerController.avgTimer);
  *             example:
  *               bestTime: 1000
  */
-router.get("/:user_id/best", timerController.getBestTime);
+router.get('/:user_id/best', timerController.getBestTime);
 // url = http://localhost:3001/:user_id/best
 
 /**
@@ -174,7 +174,7 @@ router.get("/:user_id/best", timerController.getBestTime);
  *             example:
  *               worstTime: 3000
  */
-router.get("/:user_id/worst", timerController.getWorstTime);
+router.get('/:user_id/worst', timerController.getWorstTime);
 // url = http://localhost:3001/:user_id/worst
 
 module.exports = router;

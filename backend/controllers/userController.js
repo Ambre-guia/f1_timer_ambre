@@ -1,7 +1,7 @@
-const User = require("../models/userModel");
-const jwt = require("jsonwebtoken");
-require("dotenv").config();
-const bcrypt = require("bcrypt");
+const User = require('../models/userModel');
+const jwt = require('jsonwebtoken');
+require('dotenv').config();
+const bcrypt = require('bcrypt');
 
 exports.userRegister = async (req, res) => {
   try {
@@ -13,7 +13,6 @@ exports.userRegister = async (req, res) => {
     });
     const user = await newUser.save();
     res.status(201).json({ message: `Utilisateur créé : ${user.email}` });
-    o;
   } catch (error) {
     console.error(error);
     res
@@ -27,17 +26,17 @@ exports.userLogin = async (req, res) => {
     const user = await User.findOne({ email: req.body.email });
 
     if (!user || !(await bcrypt.compare(req.body.password, user.password))) {
-      res.status(401).json({ message: "Email ou mot de passe incorrect" });
+      res.status(401).json({ message: 'Email ou mot de passe incorrect' });
       return;
     }
 
     const userData = {
       id: user._id,
       email: user.email,
-      role: "admin",
+      role: 'admin',
     };
     const token = jwt.sign(userData, process.env.JWT_KEY, {
-      expiresIn: "10h",
+      expiresIn: '10h',
     });
 
     res.status(200).json({ token });

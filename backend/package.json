@@ -24,13 +24,14 @@
     "mongoose": "^8.0.3",
     "nodemon": "^3.0.2",
     "swagger-jsdoc": "^6.2.8",
-    "swagger-ui-express": "^5.0.0"
+    "swagger-ui-express": "^5.0.1"
   },
   "devDependencies": {
+    "@eslint/js": "^9.9.1",
     "eslint": "^9.9.1",
-    "@eslint/js": "^9.0.0",
-    "eslint-plugin-prettier": "^5.0.0",
-    "eslint-config-prettier": "^9.0.0",
-    "prettier": "^3.0.0"
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "globals": "^15.9.0",
+    "prettier": "^3.3.3"
   }
 }

@@ -1,27 +1,28 @@
-import React, { useState } from "react";
-import axios from "axios";
-import { useHistory } from "react-router-dom";
+// pages/Register.js
 
-const Register = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [role, setRole] = useState(1); // Default role to user
-  const history = useHistory();
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import '../styles/Register.css'; // Importation du CSS spécifique
+
+function Register() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("/api/auth/register", { email, password, role });
-      history.push("/");
-    } catch (err) {
-      console.error(err.response.data);
+      await axios.post('/api/auth/register', { email, password });
+      navigate('/');
+    } catch (error) {
+      console.error('Registration failed', error);
     }
   };
 
   return (
-    <div>
-      <h2>Register</h2>
-      <form onSubmit={handleRegister}>
+    <div className="container">
+      <form className="form-container" onSubmit={handleRegister}>
         <input
           type="email"
           placeholder="Email"
@@ -38,6 +39,6 @@ const Register = () => {
       </form>
     </div>
   );
-};
+}
 
 export default Register;

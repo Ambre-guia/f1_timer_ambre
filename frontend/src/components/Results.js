@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { getReactionTimes } from "../services/timerService";
+import React, { useEffect, useState } from 'react';
+import { getReactionTimes } from '../services/timerService';
 
 function Results({ userId }) {
   const [times, setTimes] = useState([]);

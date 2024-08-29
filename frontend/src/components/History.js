@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import '../styles/History.css';
 
 const History = () => {
   const [bestTime, setBestTime] = useState(null);
@@ -7,8 +8,8 @@ const History = () => {
   useEffect(() => {
     const fetchBestTime = async () => {
       try {
-        const res = await axios.get("/api/timers/best-time", {
-          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        const res = await axios.get('/api/timers/best-time', {
+          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
         });
         setBestTime(res.data);
       } catch (err) {
@@ -19,9 +20,13 @@ const History = () => {
   }, []);
 
   return (
-    <div>
+    <div className="history">
       <h2>Best Time</h2>
-      {bestTime ? <p>Time: {bestTime.time} ms</p> : <p>Loading...</p>}
+      {bestTime ? (
+        <p className="bestTime ">Time: {bestTime.time} ms</p>
+      ) : (
+        <p>Loading...</p>
+      )}
       <a href="/dashboard">Back to Dashboard</a>
     </div>
   );

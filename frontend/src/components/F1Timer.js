@@ -1,46 +1,34 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+// components/F1Timer.js
 
-const F1Timer = () => {
-  const [timer, setTimer] = useState(0);
-  const [startTime, setStartTime] = useState(null);
-  const [intervalId, setIntervalId] = useState(null);
+import React, { useState, useEffect } from 'react';
+import '../styles/F1Timer.css'; // Importation du CSS spécifique
 
-  const start = () => {
-    setStartTime(Date.now());
-    const id = setInterval(() => {
-      setTimer(Date.now() - startTime);
-    }, 1);
-    setIntervalId(id);
-  };
+function F1Timer() {
+  const [color, setColor] = useState('red');
+  const [time, setTime] = useState(0);
+  const [isStarted, setIsStarted] = useState(false);
 
-  const stop = async () => {
-    clearInterval(intervalId);
-    const time = Date.now() - startTime;
-    try {
-      await axios.post(
-        "/api/timers/create",
-        { time },
-        {
-          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-        }
-      );
-    } catch (err) {
-      console.error(err.response.data);
+  useEffect(() => {
+    let timer;
+    if (isStarted && color === 'green') {
+      timer = setInterval(() => setTime((prevTime) => prevTime + 10), 10);
     }
-    setTimer(0);
-    setStartTime(null);
+    return () => clearInterval(timer);
+  }, [color, isStarted]);
+
+  const startTimer = () => {
+    setIsStarted(true);
+    setColor('green');
   };
 
   return (
-    <div>
-      <h2>F1 Timer</h2>
-      <p>Time: {timer} ms</p>
-      <button onClick={start}>Start</button>
-      <button onClick={stop}>Stop</button>
-      <a href="/dashboard">Back to Dashboard</a>
+    <div className="timer">
+      <div className={`circle ${color}`} onClick={startTimer}>
+        {time} ms
+      </div>
+      <button onClick={() => setIsStarted(false)}>Reset</button>
     </div>
   );
-};
+}
 
 export default F1Timer;

@@ -1,0 +1,16 @@
+/* UserDashboard.css */
+.dashboard {
+  padding: 20px;
+  text-align: center;
+}
+
+.dashboard h3 {
+  margin-bottom: 15px;
+}
+
+.dashboard .stats {
+  margin: 20px 0;
+  padding: 15px;
+  background-color: #e8f4fd;
+  border-radius: 6px;
+}

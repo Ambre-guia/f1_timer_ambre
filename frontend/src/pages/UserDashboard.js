@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import '../styles/UserDashboard.css';
 
 const UserDashboard = () => {
   const [user, setUser] = useState(null);
@@ -7,8 +8,8 @@ const UserDashboard = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await axios.get("/api/users/dashboard", {
-          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        const res = await axios.get('/api/users/dashboard', {
+          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
         });
         setUser(res.data);
       } catch (err) {
@@ -20,9 +21,9 @@ const UserDashboard = () => {
 
   return (
     <div>
-      <h2>Dashboard</h2>
+      <h2 className="dashboard">Dashboard</h2>
       {user ? (
-        <div>
+        <div className="stats">
           <p>Email: {user.email}</p>
           <a href="/history">History</a>
           <a href="/f1-timer">F1 Timer</a>

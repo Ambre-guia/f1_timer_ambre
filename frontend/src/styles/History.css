@@ -1,0 +1,21 @@
+/* History.css */
+.history {
+  padding: 20px;
+}
+
+.history ul {
+  list-style: none;
+  padding: 0;
+}
+
+.history li {
+  background-color: #e8f4fd;
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+.history .best-time {
+  font-weight: bold;
+  color: #d9534f;
+}

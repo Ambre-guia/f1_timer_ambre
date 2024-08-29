@@ -1,27 +1,29 @@
-import React, { useState } from "react";
-import axios from "axios";
-import { useHistory } from "react-router-dom";
+// pages/Login.js
 
-const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const history = useHistory();
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import '../styles/Login.css'; // Importation du CSS spécifique
 
-  const handleLogin = async (e) => {
+function Login() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("/api/auth/login", { email, password });
-      localStorage.setItem("token", res.data.token);
-      history.push("/dashboard");
-    } catch (err) {
-      console.error(err.response.data);
+      const response = await axios.post('/api/auth/login', { email, password });
+      localStorage.setItem('token', response.data.token);
+      navigate('/dashboard');
+    } catch (error) {
+      console.error('Login failed', error);
     }
   };
 
   return (
-    <div>
-      <h2>Login</h2>
-      <form onSubmit={handleLogin}>
+    <div className="container">
+      <form className="form-container" onSubmit={handleSubmit}>
         <input
           type="email"
           placeholder="Email"
@@ -36,9 +38,8 @@ const Login = () => {
         />
         <button type="submit">Login</button>
       </form>
-      <a href="/register">Register</a>
     </div>
   );
-};
+}
 
 export default Login;

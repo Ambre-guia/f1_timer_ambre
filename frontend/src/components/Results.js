@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import { getReactionTimes } from '../services/timerService';
 
 function Results({ userId }) {
@@ -25,5 +26,7 @@ function Results({ userId }) {
     </div>
   );
 }
-
+Results.propTypes = {
+  userId: PropTypes.string.isRequired, // Spécifie que userId est requis et doit être une chaîne
+};
 export default Results;

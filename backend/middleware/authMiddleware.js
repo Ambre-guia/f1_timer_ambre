@@ -9,6 +9,7 @@ module.exports = (req, res, next) => {
     req.user = decoded;
     next();
   } catch (err) {
+    console.error(err); // Logguer l'erreur pour le débogage
     res.status(400).json({ error: 'Invalid token' });
   }
 };

@@ -19,9 +19,10 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 // Configuration CORS - permet à toutes les origines ou configurez spécifiquement
 app.use(
   cors({
-    origin: 'http://localhost:3000/register', // Remplacez par votre frontend URL
+    origin: 'http://localhost:3000', // Remplacez par votre frontend URL
     methods: ['GET', 'POST', 'PUT', 'DELETE'], // Méthodes autorisées
     credentials: true, // Si vous avez besoin de partager les cookies
+    optionsuccessstatus: 200,
   })
 );
 

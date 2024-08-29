@@ -8,10 +8,19 @@ const UserDashboard = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await axios.get('/api/users/dashboard', {
-          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
-        });
-        setUser(res.data);
+        const res = await axios.get(
+          'htpp://localhost:5000/api/users/dashboard',
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('token')}`,
+            },
+          }
+        );
+        if (res && res.data) {
+          setUser(res.data);
+        } else {
+          console.error('Response does not contain expected data:', res);
+        }
       } catch (err) {
         console.error(err.response.data);
       }

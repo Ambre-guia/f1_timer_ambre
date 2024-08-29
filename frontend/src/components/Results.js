@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { getReactionTimes } from "../services/timerService";
+import React, { useEffect, useState } from 'react';
+import { getReactionTimes } from '../services/timerService';
+import PropTypes from 'prop-types';
 
 function Results({ userId }) {
   const [times, setTimes] = useState([]);
@@ -25,5 +26,10 @@ function Results({ userId }) {
     </div>
   );
 }
+
+// Define PropTypes for the Results component
+Results.propTypes = {
+  userId: PropTypes.string.isRequired, // userId should be a required string
+};
 
 export default Results;

@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { submitReactionTime } from "../services/timerService";
+import React, { useState } from 'react';
+import { submitReactionTime } from '../services/timerService';
 
 function Timer() {
   const [waiting, setWaiting] = useState(false);
@@ -26,7 +26,7 @@ function Timer() {
     <div className="timer">
       <h2>F1 Reaction Timer</h2>
       <button onClick={startTimer} disabled={waiting}>
-        {waiting ? "Wait for Green..." : "Start"}
+        {waiting ? 'Wait for Green...' : 'Start'}
       </button>
       <button onClick={stopTimer} disabled={waiting || startTime === 0}>
         Stop

@@ -1,20 +1,20 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { registerUser } from "../services/authService";
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { registerUser } from '../services/authService';
 
 function Register() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
   const navigate = useNavigate();
 
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
       await registerUser({ email, password });
-      navigate("/login");
+      navigate('/login');
     } catch (err) {
-      setError("Registration failed. Please try again.");
+      setError('Registration failed. Please try again.');
     }
   };
 

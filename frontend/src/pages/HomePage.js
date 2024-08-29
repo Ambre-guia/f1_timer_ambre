@@ -1,7 +1,7 @@
-import React from "react";
-import Timer from "../components/Timer";
-import Results from "../components/Results";
-import { useAuth } from "../hooks/useAuth";
+import React from 'react';
+import Timer from '../components/Timer';
+import Results from '../components/Results';
+import { useAuth } from '../hooks/useAuth';
 
 function HomePage() {
   const { user } = useAuth();

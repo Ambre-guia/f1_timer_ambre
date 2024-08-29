@@ -31,7 +31,7 @@ const { verifyToken } = require('../middlewares/jwtMiddleware');
  *       400:
  *         description: Bad request
  */
-router.post('/user/register', userController.userRegister);
+router.post('/register', userController.userRegister);
 
 /**
  * @swagger
@@ -67,7 +67,7 @@ router.post('/user/register', userController.userRegister);
  *                   type: string
  *                   example: "Login successful."
  */
-router.post('/user/login', userController.userLogin);
+router.post('/login', userController.userLogin);
 
 /**
  * @swagger

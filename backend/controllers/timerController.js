@@ -1,4 +1,4 @@
-const Timer = require("../models/Timer");
+const Timer = require('../models/Timer');
 
 exports.createTimer = async (req, res) => {
   const { time } = req.body;

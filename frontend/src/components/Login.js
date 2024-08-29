@@ -1,46 +1,44 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { loginUser } from "../services/authService";
+import axios from "axios";
+import { useHistory } from "react-router-dom";
 
-function Login() {
+const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const navigate = useNavigate();
+  const history = useHistory();
 
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      await loginUser({ email, password });
-      navigate("/");
+      const res = await axios.post("/api/auth/login", { email, password });
+      localStorage.setItem("token", res.data.token);
+      history.push("/dashboard");
     } catch (err) {
-      setError("Login failed. Please check your credentials.");
+      console.error(err.response.data);
     }
   };
 
   return (
-    <div className="login">
+    <div>
       <h2>Login</h2>
-      {error && <p className="error">{error}</p>}
       <form onSubmit={handleLogin}>
         <input
           type="email"
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          required
         />
         <input
           type="password"
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          required
         />
         <button type="submit">Login</button>
       </form>
+      <a href="/register">Register</a>
     </div>
   );
-}
+};
 
 export default Login;

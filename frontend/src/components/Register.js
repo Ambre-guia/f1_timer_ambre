@@ -1,46 +1,43 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { registerUser } from "../services/authService";
+import axios from "axios";
+import { useHistory } from "react-router-dom";
 
-function Register() {
+const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const navigate = useNavigate();
+  const [role, setRole] = useState(1); // Default role to user
+  const history = useHistory();
 
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
-      await registerUser({ email, password });
-      navigate("/login");
+      await axios.post("/api/auth/register", { email, password, role });
+      history.push("/");
     } catch (err) {
-      setError("Registration failed. Please try again.");
+      console.error(err.response.data);
     }
   };
 
   return (
-    <div className="register">
+    <div>
       <h2>Register</h2>
-      {error && <p className="error">{error}</p>}
       <form onSubmit={handleRegister}>
         <input
           type="email"
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          required
         />
         <input
           type="password"
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          required
         />
         <button type="submit">Register</button>
       </form>
     </div>
   );
-}
+};
 
 export default Register;

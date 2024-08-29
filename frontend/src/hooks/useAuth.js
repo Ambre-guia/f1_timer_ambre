@@ -2,19 +2,21 @@ import { useState, useEffect } from 'react';
 import { jwtDecode } from 'jwt-decode';
 
 export const useAuth = () => {
-  const [user, setUser] = useState(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
       try {
-        const decoded = jwtDecode(token);
-        setUser(decoded);
+        jwtDecode(token); // Decode the token without using `decoded`
+        setIsAuthenticated(true);
       } catch (error) {
-        console.error('Failed to decode token:', error);
+        setIsAuthenticated(false);
       }
+    } else {
+      setIsAuthenticated(false);
     }
   }, []);
 
-  return { user };
+  return { isAuthenticated };
 };

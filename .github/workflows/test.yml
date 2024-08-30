@@ -13,13 +13,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: "14"
+      - name: Set up Docker
+        uses: docker/setup-buildx-action@v2
 
-      - name: Install dependencies
-        run: npm install
+      - name: Build Docker image
+        run: docker build -t my-app .
 
       - name: Run tests
-        run: npm test
+        run: docker run my-app npm test

@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { getReactionTimes } from '../services/timerService';
 import PropTypes from 'prop-types';
 import { jwtDecode } from 'jwt-decode';
+import '../styles/History.css';
+import { Link } from 'react-router-dom';
 
 function History() {
   const [times, setTimes] = useState([]);
@@ -22,9 +24,8 @@ function History() {
   return (
     <div className="history">
       <h2>Historique des Temps de Réaction</h2>
-      <ul>
-        <li>{times.time} ms</li>
-      </ul>
+      <p className="bestTime">{times.time} ms</p>
+      <Link to="/dashboard">Back to dashboard</Link>
     </div>
   );
 }

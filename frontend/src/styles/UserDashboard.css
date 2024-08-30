@@ -8,9 +8,14 @@
   margin-bottom: 15px;
 }
 
-.dashboard .stats {
+.center {
+  display: flex;
+  justify-content: center;
   margin: 20px 0;
   padding: 15px;
   background-color: #e8f4fd;
   border-radius: 6px;
+}
+.first {
+  margin-right: 1em;
 }

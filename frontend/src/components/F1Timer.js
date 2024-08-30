@@ -3,6 +3,7 @@ import '../styles/F1Timer.css';
 import { submitReactionTime } from '../services/timerService';
 import PropTypes from 'prop-types';
 import { jwtDecode } from 'jwt-decode';
+import { Link } from 'react-router-dom';
 
 function F1Timer() {
   const [lightStatus, setLightStatus] = useState('red');
@@ -72,6 +73,7 @@ function F1Timer() {
       )}
       {reactionTime === 'Trop tôt !' && <p>{reactionTime}</p>}
       {error && <p className="error">{error}</p>}
+      <Link to="/dashboard">Back to dashboard</Link>
     </div>
   );
 }

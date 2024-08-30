@@ -38,8 +38,10 @@ const UserDashboard = () => {
     <div>
       <h2 className="dashboard">Dashboard</h2>
       {user ? (
-        <div className="stats">
-          <Link to={`/history`}>History</Link>
+        <div className="center">
+          <Link to={`/history`} className="first">
+            History
+          </Link>
           <Link to={`/f1-timer`}>F1-timer</Link>
         </div>
       ) : (

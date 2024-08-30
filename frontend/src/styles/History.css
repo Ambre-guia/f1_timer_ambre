@@ -1,6 +1,7 @@
 /* History.css */
 .history {
   padding: 20px;
+  text-align: center;
 }
 
 .history ul {
@@ -15,7 +16,7 @@
   border-radius: 4px;
 }
 
-.history .best-time {
+.history .bestTime {
   font-weight: bold;
   color: #d9534f;
 }

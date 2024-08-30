@@ -70,6 +70,9 @@ router.post('/create', authMiddleware, timerController.createTimer);
  *       500:
  *         description: Erreur du serveur.
  */
-router.get('/best-time', authMiddleware, timerController.getBestTime);
+router.get(
+  '/best-time/:userId',
+  /*  authMiddleware, */ timerController.getBestTime
+);
 
 module.exports = router;

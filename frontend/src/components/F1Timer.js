@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import '../styles/F1Timer.css';
 import { submitReactionTime } from '../services/timerService';
 import PropTypes from 'prop-types';
+import { jwtDecode } from 'jwt-decode';
 
-function F1Timer({ userId }) {
+function F1Timer() {
   const [lightStatus, setLightStatus] = useState('red');
   const [startTime, setStartTime] = useState(null);
   const [reactionTime, setReactionTime] = useState(null);
@@ -32,7 +33,13 @@ function F1Timer({ userId }) {
         const reaction = Date.now() - startTime;
         setReactionTime(reaction);
 
+        const token = localStorage.getItem('token');
+        if (!token) throw new Error('No token found');
+        const decodedToken = jwtDecode(token);
+        const userId = decodedToken.userId;
+
         try {
+          console.log(userId, 'essaie de id ');
           await submitReactionTime({ user_id: userId, time: reaction });
           console.log('Temps de réaction enregistré avec succès');
         } catch (err) {

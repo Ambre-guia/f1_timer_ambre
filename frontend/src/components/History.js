@@ -1,13 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { getReactionTimes } from '../services/timerService';
 import PropTypes from 'prop-types';
+import { jwtDecode } from 'jwt-decode';
 
-function History({ userId }) {
+function History() {
   const [times, setTimes] = useState([]);
+
+  const token = localStorage.getItem('token');
+  if (!token) throw new Error('No token found');
+  const decodedToken = jwtDecode(token);
+  const userId = decodedToken.userId;
 
   useEffect(() => {
     const fetchTimes = async () => {
-      const data = await getReactionTimes(userId);
+      const data = await getReactionTimes();
       setTimes(data);
     };
     fetchTimes();
@@ -17,11 +23,7 @@ function History({ userId }) {
     <div className="history">
       <h2>Historique des Temps de Réaction</h2>
       <ul>
-        {times.map((time, index) => (
-          <li key={index}>
-            {time.time} ms enregistré le {new Date(time.date).toLocaleString()}
-          </li>
-        ))}
+        <li>{times.time} ms</li>
       </ul>
     </div>
   );

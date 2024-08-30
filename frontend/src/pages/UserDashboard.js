@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import '../styles/UserDashboard.css';
+import { Link } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
 
 const UserDashboard = () => {
@@ -8,16 +9,11 @@ const UserDashboard = () => {
 
   useEffect(() => {
     const fetchUser = async () => {
-      console.log('dodo');
       try {
-        console.log('tata');
         const token = localStorage.getItem('token');
-        console.log(token);
         if (!token) throw new Error('No token found');
         const decodedToken = jwtDecode(token);
-        console.log(decodedToken);
         const userId = decodedToken.userId;
-        console.log(userId);
         const res = await axios.get(
           `http://localhost:5000/api/users/dashboard/${userId}`,
           {
@@ -26,8 +22,6 @@ const UserDashboard = () => {
             },
           }
         );
-        console.log(res);
-        console.log('TITI');
         if (res && res.data) {
           setUser(res.data);
         } else {
@@ -45,8 +39,8 @@ const UserDashboard = () => {
       <h2 className="dashboard">Dashboard</h2>
       {user ? (
         <div className="stats">
-          <a href="/history">History</a>
-          <a href="/f1-timer">F1 Timer</a>
+          <Link to={`/history`}>History</Link>
+          <Link to={`/f1-timer`}>F1-timer</Link>
         </div>
       ) : (
         <p>Loading...</p>

@@ -1,13 +1,14 @@
 const Timer = require('../models/Timer');
 
 exports.createTimer = async (req, res) => {
-  const { time } = req.body;
   try {
-    const newTimer = new Timer({ user_id: req.user.id, time });
+    const { userId, time } = req.body;
+    const newTimer = new Timer({ user_id: userId, time });
     await newTimer.save();
     res.status(201).json(newTimer);
-  } catch (err) {
-    res.status(400).json({ error: err.message });
+  } catch (error) {
+    console.error('Erreur lors de la création du timer', error);
+    res.status(500).json({ error: 'Erreur de serveur' });
   }
 };
 

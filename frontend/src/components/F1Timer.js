@@ -1,34 +1,76 @@
-// components/F1Timer.js
+import React, { useState } from 'react';
+import '../styles/F1Timer.css';
+import { submitReactionTime } from '../services/timerService';
+import PropTypes from 'prop-types';
 
-import React, { useState, useEffect } from 'react';
-import '../styles/F1Timer.css'; // Importation du CSS spécifique
+function F1Timer({ userId }) {
+  const [lightStatus, setLightStatus] = useState('red');
+  const [startTime, setStartTime] = useState(null);
+  const [reactionTime, setReactionTime] = useState(null);
+  const [isRunning, setIsRunning] = useState(false);
+  const [error, setError] = useState(null);
 
-function F1Timer() {
-  const [color, setColor] = useState('red');
-  const [time, setTime] = useState(0);
-  const [isStarted, setIsStarted] = useState(false);
+  // Démarrer le test de réaction après une durée aléatoire
+  const startTest = () => {
+    setIsRunning(true);
+    setLightStatus('red');
+    setReactionTime(null);
+    setError(null);
 
-  useEffect(() => {
-    let timer;
-    if (isStarted && color === 'green') {
-      timer = setInterval(() => setTime((prevTime) => prevTime + 10), 10);
+    const randomDelay = Math.floor(Math.random() * 3000) + 2000; // entre 2 et 5 secondes
+
+    setTimeout(() => {
+      setLightStatus('green');
+      setStartTime(Date.now());
+    }, randomDelay);
+  };
+
+  // Gérer le clic sur le bouton
+  const handleClick = async () => {
+    if (isRunning) {
+      if (lightStatus === 'green' && startTime) {
+        const reaction = Date.now() - startTime;
+        setReactionTime(reaction);
+
+        try {
+          await submitReactionTime({ user_id: userId, time: reaction });
+          console.log('Temps de réaction enregistré avec succès');
+        } catch (err) {
+          console.error(
+            'Erreur lors de la soumission du temps de réaction',
+            err
+          );
+          setError("Échec de l'enregistrement du temps de réaction.");
+        }
+      } else {
+        setReactionTime('Trop tôt !');
+      }
+
+      setIsRunning(false);
+      setStartTime(null);
+      setLightStatus('red');
     }
-    return () => clearInterval(timer);
-  }, [color, isStarted]);
-
-  const startTimer = () => {
-    setIsStarted(true);
-    setColor('green');
   };
 
   return (
-    <div className="timer">
-      <div className={`circle ${color}`} onClick={startTimer}>
-        {time} ms
+    <div className="f1-timer">
+      <div className={`light ${lightStatus}`} onClick={handleClick}>
+        {lightStatus.toUpperCase()}
       </div>
-      <button onClick={() => setIsStarted(false)}>Reset</button>
+      <button onClick={startTest} disabled={isRunning}>
+        Commencer
+      </button>
+      {reactionTime && typeof reactionTime === 'number' && (
+        <p>Votre temps de réaction : {reactionTime} ms</p>
+      )}
+      {reactionTime === 'Trop tôt !' && <p>{reactionTime}</p>}
+      {error && <p className="error">{error}</p>}
     </div>
   );
 }
+
+F1Timer.propTypes = {
+  userId: PropTypes.string.isRequired,
+};
 
 export default F1Timer;

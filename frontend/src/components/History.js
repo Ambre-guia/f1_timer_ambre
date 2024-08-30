@@ -1,35 +1,33 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import '../styles/History.css';
+import { getReactionTimes } from '../services/timerService';
+import PropTypes from 'prop-types';
 
-const History = () => {
-  const [bestTime, setBestTime] = useState(null);
+function History({ userId }) {
+  const [times, setTimes] = useState([]);
 
   useEffect(() => {
-    const fetchBestTime = async () => {
-      try {
-        const res = await axios.get('/api/timers/best-time', {
-          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
-        });
-        setBestTime(res.data);
-      } catch (err) {
-        console.error(err.response.data);
-      }
+    const fetchTimes = async () => {
+      const data = await getReactionTimes(userId);
+      setTimes(data);
     };
-    fetchBestTime();
-  }, []);
+    fetchTimes();
+  }, [userId]);
 
   return (
     <div className="history">
-      <h2>Best Time</h2>
-      {bestTime ? (
-        <p className="bestTime ">Time: {bestTime.time} ms</p>
-      ) : (
-        <p>No history</p>
-      )}
-      <a href="/dashboard">Back to Dashboard</a>
+      <h2>Historique des Temps de Réaction</h2>
+      <ul>
+        {times.map((time, index) => (
+          <li key={index}>
+            {time.time} ms enregistré le {new Date(time.date).toLocaleString()}
+          </li>
+        ))}
+      </ul>
     </div>
   );
+}
+History.propTypes = {
+  userId: PropTypes.number.isRequired,
 };
 
 export default History;

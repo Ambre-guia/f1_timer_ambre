@@ -19,7 +19,7 @@ const UserDashboard = () => {
         const userId = decodedToken.userId;
         console.log(userId);
         const res = await axios.get(
-          `http://localhost:5000/api/users/dashboard`,
+          `http://localhost:5000/api/users/dashboard/${userId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

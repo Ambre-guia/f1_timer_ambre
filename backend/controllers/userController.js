@@ -3,7 +3,7 @@ const User = require('../models/User');
 exports.test = async (req, res) => {
   console.log('là');
   try {
-    const user = await User.find({ _id: req.params.userId });
+    const user = await User.findById(req.params.userId);
     //const user = await User.findOne({ email });
     console.log(user);
     res.json({ user });

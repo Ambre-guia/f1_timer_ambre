@@ -25,7 +25,7 @@ const History = () => {
       {bestTime ? (
         <p className="bestTime ">Time: {bestTime.time} ms</p>
       ) : (
-        <p>Loading...</p>
+        <p>No history</p>
       )}
       <a href="/dashboard">Back to Dashboard</a>
     </div>

@@ -8,7 +8,7 @@ Application de timer de type F1 par compte à rebours avec back et front
 Installer mon projet avec npm
 
 ```bash
-  npm install f1_timer_ambre
+  npm install https://github.com/Ambre-guia/f1_timer_ambre.git
   cd f1_timer_ambre
 ```
     

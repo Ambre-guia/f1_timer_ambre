@@ -1,21 +1,33 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import '../styles/UserDashboard.css';
+import { jwtDecode } from 'jwt-decode';
 
 const UserDashboard = () => {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
     const fetchUser = async () => {
+      console.log('dodo');
       try {
+        console.log('tata');
+        const token = localStorage.getItem('token');
+        console.log(token);
+        if (!token) throw new Error('No token found');
+        const decodedToken = jwtDecode(token);
+        console.log(decodedToken);
+        const userId = decodedToken.userId;
+        console.log(userId);
         const res = await axios.get(
-          'htpp://localhost:5000/api/users/dashboard',
+          `http://localhost:5000/api/users/dashboard`,
           {
             headers: {
-              Authorization: `Bearer ${localStorage.getItem('token')}`,
+              Authorization: `Bearer ${token}`,
             },
           }
         );
+        console.log(res);
+        console.log('TITI');
         if (res && res.data) {
           setUser(res.data);
         } else {
@@ -33,7 +45,6 @@ const UserDashboard = () => {
       <h2 className="dashboard">Dashboard</h2>
       {user ? (
         <div className="stats">
-          <p>Email: {user.email}</p>
           <a href="/history">History</a>
           <a href="/f1-timer">F1 Timer</a>
         </div>

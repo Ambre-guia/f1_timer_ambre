@@ -8,6 +8,9 @@ const cors = require('cors');
 const timerRoutes = require('./routes/timerRoutes');
 
 const app = express();
+const dotenv = require('dotenv');
+
+dotenv.config();
 const PORT = process.env.PORT || 5000;
 
 app.use(express.json());
@@ -16,20 +19,15 @@ app.use(express.json());
 const swaggerSpec = swaggerJsdoc(require('./config/swagger'));
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
-// Configuration CORS - permet à toutes les origines ou configurez spécifiquement
+// Configuration CORS
 app.use(
   cors({
-    origin: 'http://localhost:3000', // Remplacez par votre frontend URL
-    methods: ['GET', 'POST', 'PUT', 'DELETE'], // Méthodes autorisées
-    credentials: true, // Si vous avez besoin de partager les cookies
+    origin: 'http://localhost:3000',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    credentials: true,
     optionsuccessstatus: 200,
   })
 );
-
-// Routes
-app.use('/api/auth', authRoutes);
-app.use('/api/users', userRoutes);
-app.use('/api/timers', timerRoutes);
 
 // MongoDB connection
 mongoose
@@ -39,6 +37,11 @@ mongoose
   })
   .then(() => console.log('MongoDB connected'))
   .catch((err) => console.error(err));
+
+// Routes
+app.use('/api/auth', authRoutes);
+app.use('/api/users', userRoutes);
+app.use('/api/timers', timerRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

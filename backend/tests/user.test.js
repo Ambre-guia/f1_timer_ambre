@@ -13,7 +13,7 @@ describe('User routes', () => {
       role: 1,
     });
     await user.save();
-    token = jwt.sign({ userId: user._id }, 'your_jwt_secret');
+    token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET);
   });
 
   it('should get user dashboard', async () => {

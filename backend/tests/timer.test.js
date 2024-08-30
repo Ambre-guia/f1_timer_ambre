@@ -16,7 +16,7 @@ describe('Timer routes', () => {
     });
     await user.save();
     userId = user._id;
-    token = jwt.sign({ userId }, 'your_jwt_secret');
+    token = jwt.sign({ userId }, process.env.JWT_SECRET);
   });
 
   it('should create a timer', async () => {
